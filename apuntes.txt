@@ -36,6 +36,11 @@ const insertUsers = async () => {
 
 insertUsers();
 
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
+
 Falta iniciar y crear base de datos mysql:
 
 
@@ -84,3 +89,47 @@ bash
     After making changes to the MySQL server or configuration, restart your Node.js application to apply the changes.
 
 After checking these steps and making necessary adjustments, try running your application again.
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+
+Para el ejemplo que estás desarrollando, puedes crear una base de datos en MySQL con el nombre que desees. En tu código, estás usando el nombre de base de datos 'app', por lo que puedes seguir usando ese nombre si lo prefieres.
+
+Para crear una base de datos en MySQL con el nombre 'app', puedes seguir estos pasos utilizando la línea de comandos de MySQL:
+
+    Abre una terminal y entra en la interfaz de línea de comandos de MySQL. Puedes hacerlo ejecutando el siguiente comando:
+
+    bash
+
+mysql -u root -p
+
+Esto te pedirá la contraseña de tu usuario root de MySQL.
+
+Una vez dentro de MySQL, puedes crear la base de datos ejecutando el siguiente comando:
+
+sql
+
+CREATE DATABASE app;
+
+Esto creará una base de datos con el nombre 'app'.
+
+Puedes verificar que la base de datos se ha creado correctamente ejecutando:
+
+sql
+
+SHOW DATABASES;
+
+Deberías ver la lista de bases de datos, incluida la nueva base de datos 'app'.
+
+Finalmente, puedes salir de la interfaz de línea de comandos de MySQL escribiendo:
+
+sql
+
+    exit
+
+Ahora, tu aplicación Node.js debería poder conectarse a la base de datos 'app' utilizando las credenciales y la configuración que has especificado en tu código. Asegúrate de que las credenciales coincidan con las de tu servidor MySQL y que la base de datos exista con el nombre que hayas elegido.
+
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+
