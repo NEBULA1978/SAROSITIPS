@@ -1,0 +1,86 @@
+Creamos js para introducir csv en base de datos mysql:
+
+import readline from "readline";
+import fs from "fs";
+import Sequelize from "sequelize";
+
+const sequelize = new Sequelize('app', 'root', 'root', {
+  host: '127.0.0.1',
+  dialect: 'mysql'
+});
+
+const insertUsers = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Connection to the database has been established successfully.');
+
+    const file = readline.createInterface({
+      input: fs.createReadStream('users.csv')
+    });
+
+    file.on("line", async (line) => {
+      const values = line.split(',');
+      try {
+        await sequelize.query('INSERT INTO users (name, email) VALUES (?, ?)', {
+          replacements: [values[0], values[1]]
+        });
+        console.log(`Inserted user: ${values[0]}, ${values[1]}`);
+      } catch (error) {
+        console.error(`Error inserting user: ${values[0]}, ${values[1]}`);
+      }
+    });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+  }
+};
+
+insertUsers();
+
+Falta iniciar y crear base de datos mysql:
+
+
+The error message indicates that your Node.js application is unable to connect to the MySQL database because the connection to 127.0.0.1:3306 (which is the default MySQL host and port) was refused. This typically means that MySQL is not running on your local machine, or there may be a configuration issue.
+
+Here are some steps to troubleshoot and resolve the issue:
+
+    Check MySQL Server Status:
+    Ensure that MySQL is running on your machine. You can check the status of MySQL using the following command:
+
+    bash
+
+systemctl status mysql
+
+If MySQL is not running, you can start it using:
+
+bash
+
+systemctl start mysql
+
+Or on some systems:
+
+bash
+
+    service mysql start
+
+    Verify MySQL Connection Settings:
+    Make sure that the database connection settings in your Sequelize constructor are correct. You are using the following settings:
+        Host: '127.0.0.1'
+        User: 'root'
+        Password: 'root'
+        Database: 'app'
+
+    Verify that the MySQL server is configured to accept connections with these credentials and that the database 'app' exists.
+
+    Check MySQL Port:
+    By default, MySQL uses port 3306. Ensure that MySQL is running on the standard port, and there are no firewall or networking issues blocking access to that port.
+
+    Check MySQL User Permissions:
+    Make sure that the MySQL user 'root' has the necessary permissions to connect to the database. You may need to grant privileges to the user if they don't have them.
+
+    Check for Firewall or Security Software:
+    Sometimes, firewall or security software can block connections to the database port. Ensure that there are no such restrictions in place.
+
+    Restart Your Application:
+    After making changes to the MySQL server or configuration, restart your Node.js application to apply the changes.
+
+After checking these steps and making necessary adjustments, try running your application again.
